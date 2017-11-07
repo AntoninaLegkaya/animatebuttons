@@ -1,0 +1,28 @@
+def lastBuildNumberUpdate = 0
+def buildMajorVersion = 0
+def buildMinorVersion = 0
+def buildPatchVersion = buildNumberInt() - lastBuildNumberUpdate
+
+def buildNumberInt() {
+    if (project.hasProperty('buildNumber')) {
+        return Integer.parseInt(buildNumber)
+    } else {
+        return 0
+    }
+}
+
+android {
+    buildTypes {
+        release {
+            if (project.hasProperty('changeLog') && changeLog.length() > 0) {
+                ext.betaDistributionReleaseNotes = changeLog
+            }
+            ext.betaDistributionNotifications = true
+        }
+    }
+}
+
+ext {
+    buildVersionNumber = buildNumberInt()
+    buildVersionName = "$buildMajorVersion.$buildMinorVersion.$buildPatchVersion"
+}
