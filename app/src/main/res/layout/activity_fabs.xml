@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_fab_close"
+        android:visibility="invisible"
+        tools:context="FabActivity">
+
+        <FrameLayout
+            android:id="@+id/layout_fabs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_edit"
+                app:fabSize="normal" />
+
+            <include layout="@layout/center_fabs" />
+
+
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/fab_close"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:transitionName="bg"-->
+        <!--android:background="@drawable/shape_circle_edit_bg"-->
+        <!--/>-->
+    <ImageView
+        android:id="@+id/fab_repaint_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:transitionName="bg"
+        android:background="@drawable/shape_circle"
+        android:visibility="visible"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/fab_transparent_close"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:background="@drawable/shape_transparent_circle"-->
+        <!--android:visibility="gone"/>-->
+</android.support.design.widget.CoordinatorLayout>
