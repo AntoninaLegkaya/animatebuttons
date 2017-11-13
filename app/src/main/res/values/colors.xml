@@ -13,4 +13,6 @@
     <color name="color_fab_call">#3F66B5</color>
     <color name="color_fab_close">#52527a</color>
 
+    <color name="marker_fill">#000000</color>
+
 </resources>

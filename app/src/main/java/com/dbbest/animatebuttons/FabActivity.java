@@ -26,7 +26,6 @@ public class FabActivity extends AppCompatActivity {
     Transition sharedElementEnterTransition;
     Transition.TransitionListener transitionListener;
     private ImageView closeButton;
-    private ImageView transpButton;
     private FloatingActionButton editButton;
     private Animation show_edit;
     private Animation show_compass;
@@ -36,6 +35,7 @@ public class FabActivity extends AppCompatActivity {
     private Animation show_view;
     private Animation show_camera;
     private FrameLayout layoutFabs;
+    private boolean isShowingMarker = true;
 
 
     @Override
@@ -47,15 +47,21 @@ public class FabActivity extends AppCompatActivity {
 
     }
 
+    public void morph() {
+        isShowingMarker = !isShowingMarker;
+        final int[] stateSet = {android.R.attr.state_checked * (isShowingMarker ? -1 : 1)};
+        closeButton.setImageState(stateSet, false);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fabs);
         layoutFabs = findViewById(R.id.layout_fabs);
 
-        closeButton = findViewById(R.id.fab_repaint_close);
         constraintLayout = findViewById(R.id.bg);
-
+        closeButton = findViewById(R.id.fab_close);
         final FloatingActionButton compassButton = findViewById(R.id.fab_compass);
         final FloatingActionButton myplacesButton = findViewById(R.id.fab_myplaces);
         final FloatingActionButton shareButton = findViewById(R.id.fab_share);
@@ -116,7 +122,7 @@ public class FabActivity extends AppCompatActivity {
         transitionListener = new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
-
+                morph();
 
 //                rotateAnim.setAnimationListener(new Animation.AnimationListener() {
 //                    @Override

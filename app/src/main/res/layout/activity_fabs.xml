@@ -36,30 +36,15 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/fab_close"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:transitionName="bg"-->
-        <!--android:background="@drawable/shape_circle_edit_bg"-->
-        <!--/>-->
     <ImageView
-        android:id="@+id/fab_repaint_close"
+        android:id="@+id/fab_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/animator_selector"
         android:transitionName="bg"
-        android:background="@drawable/shape_circle"
-        android:visibility="visible"/>
-    <!--<ImageView-->
-        <!--android:id="@+id/fab_transparent_close"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:background="@drawable/shape_transparent_circle"-->
-        <!--android:visibility="gone"/>-->
+        android:background="@drawable/fab_bg_revers"
+        />
+   
 </android.support.design.widget.CoordinatorLayout>
