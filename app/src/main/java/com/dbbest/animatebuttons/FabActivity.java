@@ -22,7 +22,7 @@ public class FabActivity extends AppCompatActivity {
     int height;
     int width;
     ConstraintLayout constraintLayout;
-    int duration = 4000;
+    int duration = 1000;
     Transition sharedElementEnterTransition;
     Transition.TransitionListener transitionListener;
     private ImageView closeButton;
