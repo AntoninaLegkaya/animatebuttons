@@ -105,6 +105,7 @@ public class FabActivity extends AppCompatActivity {
                 myplacesButton.startAnimation(hide_myplaces);
                 myplacesButton.setClickable(false);
                 sharedElementEnterTransition.removeListener(transitionListener);
+                morph();
             }
         });
 
