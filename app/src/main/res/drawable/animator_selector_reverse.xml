@@ -2,13 +2,13 @@
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/tick"
-        android:drawable="@drawable/vd_pathmorph_pen"
-        android:state_checked="true"/>
-    <item
         android:id="@+id/cross"
         android:drawable="@drawable/vd_pathmorph_close"
         android:state_checked="false" />
+    <item
+        android:id="@+id/tick"
+        android:drawable="@drawable/vd_pathmorph_pen"
+        android:state_checked="true" />
 
 
     <transition

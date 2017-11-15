@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
         android:id="@+id/tick"
         android:drawable="@drawable/vd_pathmorph_pen"
@@ -9,6 +10,7 @@
         android:id="@+id/cross"
         android:drawable="@drawable/vd_pathmorph_close"
         android:state_checked="true" />
+
 
 
     <transition
