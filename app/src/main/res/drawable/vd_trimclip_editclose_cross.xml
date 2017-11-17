@@ -24,9 +24,9 @@
 
     <path
         android:name="fab_pen_body"
-        android:fillColor="@color/marker_fill"
         android:pathData="@string/path_pen_fab"
         android:strokeColor="@color/stroke_color"
+        android:fillColor="@color/white_fill"
         android:strokeWidth="@integer/str_pen_width"
         android:trimPathEnd="@fraction/pen_cross_trim_end"
         />

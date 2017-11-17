@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="oval">
+            <solid android:color="@color/color_fab_myplaces"/>
+            <size
+                android:width="@dimen/fab_size"
+                android:height="@dimen/fab_size" />
+        </shape>
+    </item>
+    <item android:gravity="center">
+
+        <vector xmlns:android="http://schemas.android.com/apk/res/android"
+            android:viewportWidth="28"
+            android:viewportHeight="28"
+            android:width="@dimen/fab_pic_size"
+            android:height="@dimen/fab_pic_size">
+            <path
+                android:pathData="M14.4 6L14 4 5 4l0 17 2 0 0 -7 5.6 0 0.4 2 7 0 0 -10z"
+                android:fillColor="@color/dark_fill"  />
+        </vector>
+
+
+
+    </item>
+</layer-list>
+

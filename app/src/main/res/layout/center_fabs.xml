@@ -1,79 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_fabs"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_compass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_compass"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_compass"
-        app:fabSize="normal" />
+        android:src="@drawable/vd_compass"
+        android:visibility="invisible" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_myplaces"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_myplaces"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_myplaces"
-        app:fabSize="normal" />
+        android:src="@drawable/vd_my_location"
+        android:visibility="invisible" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_share"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_share"
-        app:fabSize="normal" />
+        android:src="@drawable/vd_share"
+        android:visibility="invisible" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_add"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_4"
-        app:fabSize="normal" />
+        android:src="@drawable/vd_add"
+        android:visibility="invisible" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_view"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_view"
-        app:fabSize="normal" />
+        android:background="@drawable/fab_bg"
+        android:src="@drawable/vd_view"
+        android:visibility="invisible" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_camera"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_camera"
-        app:fabSize="normal" />
+        android:src="@drawable/vd_camera"
+        android:visibility="invisible" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_call"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_call"
-        app:fabSize="normal" />
-
-
-
+        android:background="@drawable/fab_bg"
+        android:src="@drawable/vd_call"
+        android:visibility="invisible" />
 </FrameLayout>
+
+
+
+

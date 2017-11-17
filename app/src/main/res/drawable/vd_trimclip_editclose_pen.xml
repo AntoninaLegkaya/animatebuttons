@@ -9,7 +9,7 @@
     <path
         android:name="stem"
         android:pathData="@string/path_stem"
-        android:strokeColor="@color/stroke_color"
+        android:strokeColor="@android:color/white"
         android:strokeWidth="@integer/str_width"
         android:trimPathEnd="@fraction/stem_pen_trim_end"
         android:trimPathStart="@fraction/stem_pen_trim_start" />
@@ -17,7 +17,7 @@
 
     <path
         android:name="fab_pen_body"
-        android:fillColor="@color/marker_fill"
+        android:fillColor="@color/stroke_color"
         android:pathData="@string/path_pen_fab"
         android:strokeColor="@color/stroke_color"
         android:strokeWidth="@integer/str_pen_width" />

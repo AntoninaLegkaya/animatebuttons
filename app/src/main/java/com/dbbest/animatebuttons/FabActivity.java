@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -26,7 +25,7 @@ public class FabActivity extends AppCompatActivity {
     Transition sharedElementEnterTransition;
     Transition.TransitionListener transitionListener;
     private ImageView closeButton;
-    private FloatingActionButton editButton;
+    private ImageView callButton;
     private Animation show_edit;
     private Animation show_compass;
     private Animation show_myplaces;
@@ -63,14 +62,14 @@ public class FabActivity extends AppCompatActivity {
 
         constraintLayout = findViewById(R.id.bg);
         closeButton = findViewById(R.id.fab_close);
-        final FloatingActionButton compassButton = findViewById(R.id.fab_compass);
-        final FloatingActionButton myplacesButton = findViewById(R.id.fab_myplaces);
-        final FloatingActionButton shareButton = findViewById(R.id.fab_share);
-        final FloatingActionButton addButton = findViewById(R.id.fab_add);
-        final FloatingActionButton viewButton = findViewById(R.id.fab_view);
-        final FloatingActionButton cameraButton = findViewById(R.id.fab_camera);
+        final ImageView compassButton = findViewById(R.id.fab_compass);
+        final ImageView myplacesButton = findViewById(R.id.fab_myplaces);
+        final ImageView shareButton = findViewById(R.id.fab_share);
+        final ImageView addButton = findViewById(R.id.fab_add);
+        final ImageView viewButton = findViewById(R.id.fab_view);
+        final ImageView cameraButton = findViewById(R.id.fab_camera);
 
-        editButton = findViewById(R.id.fab_edit);
+        callButton = findViewById(R.id.fab_call);
 
         show_edit = AnimationUtils.loadAnimation(getApplication(), R.anim.edit_show);
         final Animation hide_edit = AnimationUtils.loadAnimation(getApplication(), R.anim.edit_hide);
@@ -151,6 +150,7 @@ public class FabActivity extends AppCompatActivity {
 
         sharedElementEnterTransition.addListener(transitionListener);
 
+        callButton.setVisibility(View.VISIBLE);
 
         FrameLayout.LayoutParams myplacesParams = (FrameLayout.LayoutParams) myplacesButton.getLayoutParams();
         myplacesParams.rightMargin += 0;
@@ -340,8 +340,8 @@ public class FabActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                editButton.startAnimation(hide_edit);
-                editButton.setClickable(true);
+                callButton.startAnimation(hide_edit);
+                callButton.setClickable(true);
             }
 
             @Override
@@ -458,9 +458,9 @@ public class FabActivity extends AppCompatActivity {
                     super.onAnimationEnd(animation);
 //                    myView.setVisibility(View.INVISIBLE);
                     layoutFabs.setVisibility(View.VISIBLE);
-                    if (editButton != null) {
+                    if (callButton != null) {
 
-                        editButton.startAnimation(show_edit);
+                        callButton.startAnimation(show_edit);
                     }
 
                 }

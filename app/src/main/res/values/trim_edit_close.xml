@@ -7,7 +7,7 @@
     <integer name="viewport_height">48</integer>
     <integer name="str_width">4</integer>
     <integer name="str_pen_width">1</integer>
-    <color name="stroke_color">#fff</color>
+    <color name="stroke_color">#ffffff</color>
 
     <!--<string name="editclose_path_head_pen">-->
     <!--M 28,12 L 29,13-->
