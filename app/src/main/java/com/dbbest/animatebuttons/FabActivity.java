@@ -22,7 +22,7 @@ public class FabActivity extends AppCompatActivity {
     int height;
     int width;
     ConstraintLayout constraintLayout;
-    int duration = 1000;
+    int duration = 200;
     Transition sharedElementEnterTransition;
     Transition.TransitionListener transitionListener;
     private ImageView closeButton;
@@ -35,7 +35,7 @@ public class FabActivity extends AppCompatActivity {
     private Animation show_view;
     private Animation show_camera;
     private FrameLayout layoutFabs;
-    private boolean isShowingMarker = true;
+    private boolean isShowingMarker;
 
 
     @Override
@@ -49,8 +49,9 @@ public class FabActivity extends AppCompatActivity {
 
     public void morph() {
         isShowingMarker = !isShowingMarker;
-        final int[] stateSet = {android.R.attr.state_checked * (isShowingMarker ? -1 : 1)};
-        closeButton.setImageState(stateSet, false);
+        final int[] stateSet = {android.R.attr.state_checked * (isShowingMarker ? 1 : -1)};
+        closeButton.setImageState(stateSet, true);
+
 
     }
 
@@ -124,44 +125,6 @@ public class FabActivity extends AppCompatActivity {
             @Override
             public void onTransitionStart(Transition transition) {
                 morph();
-
-//                rotateAnim.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation animation) {
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation animation) {
-//                        ValueAnimator positionAnimator = ValueAnimator.ofFloat(-26f, 30f);
-//// 2
-//                        positionAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                            @Override
-//                            public void onAnimationUpdate(ValueAnimator animation) {
-//                                transpButton.setTranslationY((Float) (animation.getAnimatedValue()));
-//                            }
-//                        });
-//// 3
-//                        ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(transpButton,
-//                                "rotation", 0f, 360f);
-//// 4
-//                        AnimatorSet animatorSet = new AnimatorSet();
-//// 5
-//                        animatorSet.play(positionAnimator).with(rotationAnimator);
-//// 6
-//                        animatorSet.setDuration(4000);
-//                        animatorSet.start();
-//
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation animation) {
-//
-//                    }
-//                });
-
-
             }
 
             @Override
@@ -432,12 +395,14 @@ public class FabActivity extends AppCompatActivity {
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
+
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
 
                     myView.setVisibility(View.INVISIBLE);
+
                 }
 
                 @Override

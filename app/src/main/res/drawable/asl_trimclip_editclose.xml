@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit"
+        android:drawable="@drawable/vd_trimclip_editclose_pen"
+        android:state_checked="false"
+
+       />
+
+    <item
+        android:id="@+id/close"
+        android:drawable="@drawable/vd_trimclip_editclose_cross"
+        android:state_checked="true"
+        />
+
+
+
+    <transition
+        android:drawable="@drawable/avd_trimclip_editclose_pen_cross"
+        android:fromId="@id/edit"
+        android:toId="@id/close" />
+
+    <transition
+        android:drawable="@drawable/avd_trimclip_editclose_cross_pen"
+        android:fromId="@id/close"
+        android:toId="@id/edit" />
+
+</animated-selector>

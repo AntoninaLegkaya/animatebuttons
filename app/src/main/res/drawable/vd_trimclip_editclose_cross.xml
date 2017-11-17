@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/image_width"
+    android:height="@dimen/image_height"
+    android:tint="?attr/colorControlNormal"
+    android:viewportHeight="@integer/viewport_height"
+    android:viewportWidth="@integer/viewport_width">
+
+    <path
+    android:name="stem"
+    android:pathData="@string/path_stem"
+    android:strokeColor="@color/stroke_color"
+    android:strokeWidth="@integer/str_width"
+    android:trimPathEnd="@fraction/stem_cross_trim_end"
+    android:trimPathStart="@fraction/stem_cross_trim_start" />
+
+
+    <path
+        android:name="pen_body"
+        android:pathData="@string/path_body_pen"
+        android:strokeColor="@color/stroke_color"
+        android:strokeWidth="@integer/str_width"
+        android:trimPathEnd="@fraction/pen_cross_trim_end" />
+
+    <path
+        android:name="fab_pen_body"
+        android:fillColor="@color/marker_fill"
+        android:pathData="@string/path_pen_fab"
+        android:strokeColor="@color/stroke_color"
+        android:strokeWidth="@integer/str_pen_width"
+        android:trimPathEnd="@fraction/pen_cross_trim_end"
+        />
+
+
+</vector>

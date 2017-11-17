@@ -14,7 +14,7 @@
             android:pathData="@string/path_cross"
             android:strokeColor="@android:color/white"
             android:strokeLineCap="square"
-            android:strokeWidth="@integer/stroke_width"/>
+            android:strokeWidth="@integer/str_width"/>
 
     </group>
 </vector>

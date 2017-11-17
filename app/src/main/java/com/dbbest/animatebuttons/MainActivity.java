@@ -9,14 +9,14 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView fab;
-    private boolean isShowingMarker = true;
+    private boolean isShowingMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fab = findViewById(R.id.fab_main);
-
+        fab.setBackground(getDrawable(R.drawable.fab_bg));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -26,22 +26,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void morph() {
-        isShowingMarker = !isShowingMarker;
-        final Intent intent = new Intent(MainActivity.this, FabActivity.class);
 
+        final Intent intent = new Intent(MainActivity.this, FabActivity.class);
+        isShowingMarker = !isShowingMarker;
 
         ActivityOptions options;
         options = ActivityOptions.makeSceneTransitionAnimation(
                 MainActivity.this,
                 android.util.Pair.create((View) fab, "bg"));
-        final int[] stateSet = {android.R.attr.state_checked * (isShowingMarker ? 1 : -1)};
-//        if (isShowingMarker == false) {
-//
-//            fab.setBackground(getDrawable(R.drawable.fab_bg));
-//        } else {
-//            fab.setBackground(getDrawable(R.drawable.fab_bg_revers));
-//        }
-//        fab.setImageState(stateSet, true);
         startActivity(intent, options.toBundle());
 
     }

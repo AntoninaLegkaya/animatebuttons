@@ -10,12 +10,13 @@
         android:pivotX="12"
         android:pivotY="12">
 
+
         <path
             android:name="tickPath"
             android:pathData="@string/path_tick"
             android:strokeColor="@android:color/white"
             android:strokeLineCap="square"
-            android:strokeWidth="@integer/stroke_width" />
+            android:strokeWidth="@integer/str_width" />
 
     </group>
 </vector>
