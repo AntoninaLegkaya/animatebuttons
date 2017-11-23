@@ -5,7 +5,7 @@
     <color name="colorAccent">#33ccff</color>
     <color name="colorFAB">#FF3F66B5</color>
     <color name="color_fab_compass">#ff8080</color>
-    <color name="color_fab_myplaces">#4dffff</color>
+    <color name="color_fab_myplaces">#0000dd</color>
     <color name="color_fab_share">#ffff66</color>
     <color name="color_fab_add">#bf8040</color>
     <color name="color_fab_view">#ff4dc4</color>
