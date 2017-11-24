@@ -73,7 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:onClick=""
         android:background="@drawable/fab_bg"
         android:src="@drawable/asl_trimclip_editclose"
         android:tint="@color/white_fill"

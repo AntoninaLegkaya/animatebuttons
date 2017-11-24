@@ -3,10 +3,10 @@ package com.dbbest.animatebuttons;
 import android.widget.ImageView;
 
 public class MovingObject {
-    private int left;
-    private int top;
-    private int right;
-    private int buttom;
+    private float left;
+    private float top;
+    private float right;
+    private float buttom;
     private ImageView view;
 
     public MovingObject(int left, int top) {
@@ -15,7 +15,7 @@ public class MovingObject {
         this.top = top;
     }
 
-    public MovingObject(int left, int top, int right, int buttom, ImageView view) {
+    public MovingObject(float left, float top, float right, float buttom, ImageView view) {
         this.left = left;
         this.top = top;
         this.right = right;
@@ -27,19 +27,19 @@ public class MovingObject {
         return view;
     }
 
-    public void setLeft(int left) {
+    public void setLeft(float left) {
         this.left = left;
     }
 
-    public void setTop(int top) {
+    public void setTop(float top) {
         this.top = top;
     }
 
-    public int getLeft() {
+    public float getLeft() {
         return left;
     }
 
-    public int getTop() {
+    public float getTop() {
         return top;
     }
 
