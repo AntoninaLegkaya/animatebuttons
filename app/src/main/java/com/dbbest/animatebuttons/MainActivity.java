@@ -115,7 +115,13 @@ public class MainActivity extends AppCompatActivity {
         windowheight = getWindowManager().getDefaultDisplay().getHeight();
 
 
-//        fab.setOnTouchListener(this);
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -173,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
                         downX = event.getX();
                         downY = event.getY();
 
-
                         fab.getHitRect(circleHitRect);
                         if (circleHitRect.contains((int) downX, (int) downY)) {
                             cancelFlingAnimation();
@@ -181,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                             offsetX = fab.getTranslationX();
                             offsetY = fab.getTranslationY();
                             velocityTracker.addMovement(event);
+
                         }
                         return true;
                     }
@@ -197,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
                         fab.setTranslationY(translationY);
                         velocityTracker.addMovement(event);
                         transitionXY(translationX, translationY, event);
-
 
                         return true;
                     }
@@ -345,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void followToHeardFab(ImageView view, final float x, final float y) {
+
         view.setTranslationX(x);
         view.setTranslationY(y);
         SpringAnimation animX = new SpringAnimation(view,
@@ -517,13 +523,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//
-//
-//        return gestureDetector.onTouchEvent(event);
-//    }
-
     private void callOnClick() {
         morph();
         fab.setVisibility(View.GONE);
@@ -541,51 +540,18 @@ public class MainActivity extends AppCompatActivity {
     private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         public boolean onSingleTapUp(MotionEvent e) {
+            Timber.i("SINGLE_TAP");
             callOnClick();
-            return false;
-        }
-
-        public void onLongPress(MotionEvent e) {
-            Timber.i("ACTION_LONG_PRESS");
-            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(fab);
-            fab.startDrag(null, shadowBuilder, fab, 0);
-            fab.setVisibility(View.INVISIBLE);
-        }
-
-        public boolean onDoubleTap(MotionEvent e) {
-            return false;
-        }
-
-        public boolean onDoubleTapEvent(MotionEvent e) {
-            return false;
-        }
-
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            return false;
-
-        }
-
-        public void onShowPress(MotionEvent e) {
-        }
-
-        public boolean onDown(MotionEvent e) {
-            Timber.i("ACTION_DOWN");
-            selected_item = fab;
-            imageParams = fab.getLayoutParams();
-
             return true;
         }
 
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, final float distanceX, float distanceY) {
-            return super.onScroll(e1, e2, distanceX, distanceY);
+        public void onLongPress(MotionEvent e) {
+            Timber.i("LONG_TAP");
+            if (!isDragging) {
+                callOnClick();
+            }
         }
 
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            return super.onFling(e1, e2, velocityX, velocityY);
-
-        }
 
 
     }
