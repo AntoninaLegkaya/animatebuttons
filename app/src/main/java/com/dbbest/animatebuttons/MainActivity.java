@@ -1,5 +1,9 @@
 package com.dbbest.animatebuttons;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -8,9 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.FlingAnimation;
-import android.support.animation.FloatPropertyCompat;
-import android.support.animation.SpringAnimation;
-import android.support.animation.SpringForce;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -58,11 +59,14 @@ public class MainActivity extends AppCompatActivity {
     private FlingAnimation flingYAnimation;
     private Rect circleHitRect = new Rect();
     private boolean isDragging = false;
+    private boolean isAnimationCompleted = false;
     private float downX;
     private float downY;
     private float offsetX;
     private float offsetY;
-    private boolean isTerminationConditionMet = false;
+
+    private float translationX;
+    private float translationY;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -82,28 +86,22 @@ public class MainActivity extends AppCompatActivity {
         final ImageView locationView = findViewById(R.id.fab_myplaces);
 
         viewList.add(new MovingObject(0, 0, 0,
-                0, cameraView));
+                0, fab, "fab", 0));
         viewList.add(new MovingObject(0, 0, 0,
-                0, callView));
+                0, cameraView, "camera", 1));
         viewList.add(new MovingObject(0, 0, 0,
-                0, shareView));
+                0, callView, "call", 2));
         viewList.add(new MovingObject(0, 0, 0,
-                0, addView));
+                0, shareView, "share", 3));
         viewList.add(new MovingObject(0, 0, 0,
-                0, locationView));
+                0, addView, "add", 4));
         viewList.add(new MovingObject(0, 0, 0,
-                0, presentationView));
+                0, locationView, "location", 5));
         viewList.add(new MovingObject(0, 0, 0,
-                0, compassView));
-
-//        callView.setVisibility(View.GONE);
-//        cameraView.setVisibility(View.GONE);
-//        shareView.setVisibility(View.GONE);
-//        addView.setVisibility(View.GONE);
-//        locationView.setVisibility(View.GONE);
-//        presentationView.setVisibility(View.GONE);
-//        compassView.setVisibility(View.GONE);
-
+                0, presentationView, "presentation", 6));
+        viewList.add(new MovingObject(0, 0, 0,
+                0, compassView, "compass", 7));
+        composeAnimation(0, 0);
 
         fab.setBackground(getDrawable(R.drawable.fab_bg));
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
@@ -122,52 +120,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                callOnClick();
-//            }
-//        });
-//        fab.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//
-//                SpringAnimation animX = new SpringAnimation(fab,
-//                        new FloatPropertyCompat<View>("translationX") {
-//                            @Override
-//                            public float getValue(View view) {
-//                                return view.getTranslationX();
-//                            }
-//
-//                            @Override
-//                            public void setValue(View view, float value) {
-//                                view.setTranslationX(value);
-//                            }
-//                        }, 0);
-//                animX.getSpring().setStiffness(SpringForce.STIFFNESS_VERY_LOW);
-//                animX.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
-//                animX.setStartVelocity(0);
-//                animX.start();
-//
-//                SpringAnimation animY = new SpringAnimation(fab,
-//                        new FloatPropertyCompat<View>("translationY") {
-//                            @Override
-//                            public float getValue(View view) {
-//                                return view.getTranslationY();
-//                            }
-//
-//                            @Override
-//                            public void setValue(View view, float value) {
-//                                view.setTranslationY(value);
-//                            }
-//                        }, 0);
-//                animY.getSpring().setStiffness(SpringForce.STIFFNESS_VERY_LOW);
-//                animY.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
-//                animY.setStartVelocity(0);
-//                animY.start();
-//                return true;
-//            }
-//        });
 
         findViewById(R.id.layout_main).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -181,121 +133,146 @@ public class MainActivity extends AppCompatActivity {
 
                         fab.getHitRect(circleHitRect);
                         if (circleHitRect.contains((int) downX, (int) downY)) {
-                            cancelFlingAnimation();
                             isDragging = true;
+
                             offsetX = fab.getTranslationX();
                             offsetY = fab.getTranslationY();
                             velocityTracker.addMovement(event);
+                            initCordListView();
 
                         }
                         return true;
                     }
 
                     case MotionEvent.ACTION_MOVE: {
-                        Timber.i("ACTION_MOVE");
+
                         if (!isDragging) {
                             break;
+                        } else {
+                            Timber.i("ACTION_MOVE ");
+                            translationX = event.getX() - downX + offsetX;
+                            translationY = event.getY() - downY + offsetY;
+                            velocityTracker.addMovement(event);
+                            composeAnimation(translationX, translationY);
+
                         }
-
-                        final float translationX = event.getX() - downX + offsetX;
-                        float translationY = event.getY() - downY + offsetY;
-                        fab.setTranslationX(translationX);
-                        fab.setTranslationY(translationY);
-                        velocityTracker.addMovement(event);
-                        transitionXY(translationX, translationY, event);
-
                         return true;
                     }
 
                     case MotionEvent.ACTION_UP: {
                         Timber.i("ACTION_UP");
-                        isDragging = false;
-
+                        composeAnimation(0, 0);
                         cancelFlingAnimation();
-                        looseFab(fab);
-                        looseFab(callView);
-                        looseFab(compassView);
-                        looseFab(cameraView);
-                        looseFab(addView);
-                        looseFab(locationView);
-                        looseFab(presentationView);
-                        looseFab(shareView);
-
-                        initCordListView();
-
-                        return true;
-                    }
-
-
-                    case MotionEvent.ACTION_CANCEL: {
-                        Timber.i("ACTION_CANCEL");
-                        if (!isDragging) {
-                            break;
-                        }
                         isDragging = false;
 
-                        cancelFling(fab);
-                        cancelFling(callView);
-                        cancelFling(compassView);
-                        cancelFling(cameraView);
-                        cancelFling(addView);
-                        cancelFling(locationView);
-                        cancelFling(presentationView);
-                        cancelFling(shareView);
-
                         return true;
                     }
+
                 }
                 return false;
             }
         });
     }
 
+
     private void initCordListView() {
         for (MovingObject aViewList : viewList) {
-            aViewList.setLeft(offsetX);
-            aViewList.setTop(offsetY);
+            aViewList.setLeft(0);
+            aViewList.setTop(0);
         }
     }
 
+    private void composeAnimation(final float x, final float y) {
+        AnimatorSet mainSet = new AnimatorSet();
+        AnimatorSet fabSet = transitionXY(viewList.get(0), x, y);
+        AnimatorSet cameraSet = transitionXY(viewList.get(1), x, y);
+        AnimatorSet callSet = transitionXY(viewList.get(2), x, y);
+        AnimatorSet shareSet = transitionXY(viewList.get(3), x, y);
+        AnimatorSet addSet = transitionXY(viewList.get(4), x, y);
+        AnimatorSet locationSet = transitionXY(viewList.get(5), x, y);
+        AnimatorSet presentationSet = transitionXY(viewList.get(6), x, y);
+        AnimatorSet compassSet = transitionXY(viewList.get(7), x, y);
+        mainSet.playSequentially(fabSet, cameraSet, callSet, shareSet, addSet, locationSet,
+                presentationSet, compassSet);
+        mainSet.start();
 
-    private void transitionXY(float x, float y, MotionEvent event) {
-
-        float i = 1.2f;
-        float xMoveCord = x;
-        float yMoveCord = y;
-
-        for (MovingObject aViewList : viewList) {
-            float cordX = aViewList.getLeft();
-            float cordY = aViewList.getTop();
-
-            float dx = x - cordX;
-            float dy = y - cordY;
-
-            if (dx != 0) {
-                cordX = cordX + i * (dx / 6);
+        mainSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Timber.i("Animation completed");
+                isAnimationCompleted = true;
             }
 
-            if (dy != 0) {
-                cordY = cordY + i * (dy / 6);
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Timber.i("Animation started");
+                isAnimationCompleted = false;
             }
-            aViewList.setLeft(cordX);
-            aViewList.setTop(cordY);
-
-            aViewList.getView().setTranslationX(cordX);
-            aViewList.getView().setTranslationY(cordY);
+        });
 
 
-            i = i + 1f;
+    }
 
-            followToHeardFab(aViewList.getView(), xMoveCord, yMoveCord);
-            xMoveCord = cordX;
-            yMoveCord = cordY;
+    @SuppressLint("ObjectAnimatorBinding")
+    private AnimatorSet transitionXY(MovingObject fabView, float x, float y) {
+
+        float cordX;
+        float cordY;
+
+
+        if (fabView.getName().equals("fab")) {
+            cordX = x;
+            cordY = y;
+        } else {
+
+            cordX = fabView.getLeft();
+            cordY = fabView.getTop();
+            if (cordX == 0 && cordY == 0) {
+                float dx = x / 10;
+                float dy = y / 10;
+                if (dx != 0) {
+                    cordX = cordX + fabView.getPossition() * dx;
+                }
+
+                if (dy != 0) {
+                    cordY = cordY + fabView.getPossition() * dy;
+                }
+
+            } else {
+
+
+                float dx = x - cordX;
+                float dy = y - cordY;
+
+                if (dx != 0) {
+                    cordX = cordX + dx;
+                }
+
+                if (dy != 0) {
+                    cordY = cordY + dy;
+
+                }
+
+            }
         }
+
+//        Timber.i("Name: %s fromX:%f, fromY:%f toX:%f, toY:%f *****************************"
+//                , fabView.getName(), fabView.getLeft(), fabView.getTop(), cordX, cordY);
+        ObjectAnimator xAnimator = ObjectAnimator.ofFloat(fabView.getView(), "translationX", fabView
+                .getLeft(), cordX);
+        ObjectAnimator yAnimator = ObjectAnimator.ofFloat(fabView.getView(), "translationY", fabView
+                .getTop(), cordY);
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(xAnimator, yAnimator);
+        set.setDuration(150);
+        fabView.setLeft(cordX);
+        fabView.setTop(cordY);
+        return set;
+
     }
 
     private void cancelFling(ImageView view) {
-        velocityTracker.computeCurrentVelocity(1000);
+        velocityTracker.computeCurrentVelocity(0);
         if (view.getTranslationX() != 0) {
             flingXAnimation = new FlingAnimation(view,
                     DynamicAnimation.TRANSLATION_X)
@@ -312,202 +289,6 @@ public class MainActivity extends AppCompatActivity {
         }
         velocityTracker.clear();
     }
-
-    private void looseFab(ImageView view) {
-        SpringAnimation animX = new SpringAnimation(view,
-                new FloatPropertyCompat<View>("translationX") {
-                    @Override
-                    public float getValue(View view) {
-                        return view.getTranslationX();
-                    }
-
-                    @Override
-                    public void setValue(View view, float value) {
-                        view.setTranslationX(value);
-                    }
-                }, 0);
-        animX.getSpring().setStiffness(SpringForce.STIFFNESS_VERY_LOW);
-        animX.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
-        animX.setStartVelocity(0);
-        animX.start();
-
-        SpringAnimation animY = new SpringAnimation(view,
-                new FloatPropertyCompat<View>("translationY") {
-                    @Override
-                    public float getValue(View view) {
-                        return view.getTranslationY();
-                    }
-
-                    @Override
-                    public void setValue(View view, float value) {
-                        view.setTranslationY(value);
-                    }
-                }, 0);
-        animY.getSpring().setStiffness(SpringForce.STIFFNESS_MEDIUM);
-        animY.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
-        animY.setStartVelocity(0);
-        animY.start();
-    }
-
-    private void followToHeardFab(ImageView view, final float x, final float y) {
-
-        view.setTranslationX(x);
-        view.setTranslationY(y);
-        SpringAnimation animX = new SpringAnimation(view,
-                new FloatPropertyCompat<View>("translationX") {
-                    @Override
-                    public float getValue(View view) {
-                        return view.getTranslationX();
-                    }
-
-                    @Override
-                    public void setValue(View view, float value) {
-                        view.setTranslationX(value);
-                    }
-                }, x);
-        animX.getSpring().setStiffness(SpringForce.STIFFNESS_VERY_LOW);
-        animX.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
-        animX.setStartVelocity(0);
-        animX.start();
-
-        SpringAnimation animY = new SpringAnimation(view,
-                new FloatPropertyCompat<View>("translationY") {
-                    @Override
-                    public float getValue(View view) {
-                        return view.getTranslationY();
-                    }
-
-                    @Override
-                    public void setValue(View view, float value) {
-                        view.setTranslationY(value);
-                    }
-                }, y);
-        animY.getSpring().setStiffness(SpringForce.STIFFNESS_VERY_LOW);
-        animY.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
-        animY.setStartVelocity(0);
-        animY.start();
-    }
-
-
-//        mainlayout.setOnDragListener(new View.OnDragListener() {
-//            @Override
-//            public boolean onDrag(View v, DragEvent event) {
-//                switch (event.getAction()) {
-//                    case DragEvent.ACTION_DRAG_STARTED:
-//                        int leftCord = (int) event.getX();
-//                        int topCord = (int) event.getY();
-//
-//
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_ENTERED:
-//                        leftCord = (int) event.getX();
-//                        topCord = (int) event.getY();
-//                        if (leftCord > windowwidth) {
-//                            leftCord = windowwidth;
-//                        }
-//                        if (topCord > windowheight) {
-//                            topCord = windowheight;
-//                        }
-//
-//                        Timber.i("Entered position x : %d, y : %d", leftCord, topCord);
-//
-//
-//                        for (MovingObject aViewList : viewList) {
-//                            aViewList.getView().setVisibility(View.INVISIBLE);
-//
-//
-//                            CoordinatorLayout.LayoutParams lp =
-//                                    new CoordinatorLayout.LayoutParams(
-//                                            new ViewGroup.MarginLayoutParams(
-//                                                    CoordinatorLayout.LayoutParams.WRAP_CONTENT,
-//                                                    CoordinatorLayout.LayoutParams.WRAP_CONTENT));
-//                            lp.setMargins(leftCord, topCord, 0,
-//                                    0);
-//
-//                            aViewList.setLeft(leftCord);
-//                            aViewList.setTop(topCord);
-//                            aViewList.getView().setLayoutParams(lp);
-//
-//                        }
-//
-//
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_EXITED:
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_LOCATION:
-//                        leftCord = (int) event.getX();
-//                        topCord = (int) event.getY();
-////                            Timber.i("Location position x : %d, y : %d", leftCord, topCord);
-//                        putFabPosition(leftCord, topCord);
-//
-//
-//
-//
-//
-//                        break;
-//
-//                    case DragEvent.ACTION_DRAG_ENDED:
-//                        Timber.i("Action is DragEvent.ACTION_DRAG_ENDED");
-//
-//
-//                        selected_item.setLayoutParams(imageParams);
-//                        selected_item.setVisibility(View.VISIBLE);
-//                        for (MovingObject aViewList : viewList) {
-//                            View view = aViewList.getView();
-//                            view.setLayoutParams(imageParams);
-//                            view.setVisibility(View.VISIBLE);
-//                        }
-//                        break;
-//
-//                    case DragEvent.ACTION_DROP:
-//
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
-//
-//    }
-
-//    private void putFabPosition(int x, int y) {
-//
-//        int i = 7;
-//
-//        for (MovingObject aViewList : viewList) {
-//            int cordX = aViewList.getLeft();
-//            int cordY = aViewList.getTop();
-//            int dx = x - cordX;
-//            int dy = y - cordY;
-//
-//            if (dx != 0) {
-//                cordX = cordX + i * (dx / 8);
-//            }
-//
-//            if (dy != 0) {
-//                cordY = cordY + i * (dy / 8);
-//            }
-//
-//            CoordinatorLayout.LayoutParams lp =
-//                    new CoordinatorLayout.LayoutParams(
-//                            new ViewGroup.MarginLayoutParams(
-//                                    CoordinatorLayout.LayoutParams.WRAP_CONTENT,
-//                                    CoordinatorLayout.LayoutParams.WRAP_CONTENT));
-//            aViewList.setXY(cordX, cordY, 0, 0);
-////            Timber.i("Move coordinates x_cord : %d, y_cord : %d", cordX, cordY);
-//            lp.setMargins(cordX - 75, cordY - 75, 0, 0);
-//
-//            aViewList.getView().setLayoutParams(lp);
-//            aViewList.getView().setVisibility(View.VISIBLE);
-//
-//            i--;
-//        }
-//    }
-
 
     public void morph() {
 
@@ -537,6 +318,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        initCordListView();
+        composeAnimation(0, 0);
+        super.onPause();
+    }
+
     private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         public boolean onSingleTapUp(MotionEvent e) {
@@ -547,11 +335,10 @@ public class MainActivity extends AppCompatActivity {
 
         public void onLongPress(MotionEvent e) {
             Timber.i("LONG_TAP");
-            if (!isDragging) {
+            if (!isDragging && isAnimationCompleted) {
                 callOnClick();
             }
         }
-
 
 
     }

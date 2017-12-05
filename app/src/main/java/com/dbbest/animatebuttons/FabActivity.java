@@ -88,15 +88,14 @@ public class FabActivity extends AppCompatActivity {
 //
         show_add = AnimationUtils.loadAnimation(getApplication(), R.anim.add_show);
         final Animation hide_add = AnimationUtils.loadAnimation(getApplication(), R.anim.add_hide);
-//
+
         show_view = AnimationUtils.loadAnimation(getApplication(), R.anim.view_show);
         final Animation hide_view = AnimationUtils.loadAnimation(getApplication(), R.anim.view_hide);
-//
+
         show_camera = AnimationUtils.loadAnimation(getApplication(), R.anim.camera_show);
         final Animation hide_camera = AnimationUtils.loadAnimation(getApplication(), R.anim.camera_hide);
 
-//        final Animation rotateAnim = AnimationUtils.loadAnimation(getApplication(), R.anim
-//                .appear_fab_close);
+
 
 
         closeButton.setOnClickListener(new View.OnClickListener() {
