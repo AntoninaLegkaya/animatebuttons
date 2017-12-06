@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:drawable="@drawable/vd_trimclip_editclose_pen">
+
+    <target android:name="fab_pen_body">
+        <aapt:attr name="android:animation">
+
+            <objectAnimator
+                android:duration="@integer/show_hide_cross_duration"
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:propertyName="trimPathEnd"
+                android:valueFrom="@fraction/pen_pen_trim_end"
+                android:valueTo="@fraction/pen_cross_trim_end" />
+        </aapt:attr>
+    </target>
+    <target android:name="pen_body">
+        <aapt:attr name="android:animation">
+            <set>
+
+                <objectAnimator
+                    android:duration="@integer/show_hide_cross_duration"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="@fraction/pen_cross_trim_end"
+                    android:valueTo="@fraction/pen_pen_trim_end" />
+
+            </set>
+        </aapt:attr>
+    </target>
+
+
+    <target android:name="stem">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+
+                <objectAnimator
+                    android:duration="@integer/stem_trim_shorter_duration"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="trimPathStart"
+                    android:valueFrom="@fraction/stem_pen_trim_start"
+                    android:valueTo="@fraction/stem_cross_trim_start"
+                    />
+
+                <objectAnimator
+                    android:duration="@integer/stem_trim_longer_duration"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"
+                    android:propertyName="trimPathEnd"
+                    android:valueFrom="@fraction/stem_cross_trim_start"
+                    android:valueTo="@fraction/stem_cross_trim_end" />
+            </set>
+        </aapt:attr>
+    </target>
+
+
+</animated-vector>

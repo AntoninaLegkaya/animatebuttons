@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 apply from: "$project.rootDir/gradletool/build-utils.gradle"
-//apply from: "$project.rootDir/gradletool/script-findbugs.gradle"
-//apply from: "$project.rootDir/gradletool/script-checkstyle.gradle"
-//apply from: "$project.rootDir/gradletool/script-lint.gradle"
-//apply from: "$project.rootDir/gradletool/script-pmd.gradle"
+apply from: "$project.rootDir/gradletool/script-findbugs.gradle"
+apply from: "$project.rootDir/gradletool/script-checkstyle.gradle"
+apply from: "$project.rootDir/gradletool/script-lint.gradle"
+apply from: "$project.rootDir/gradletool/script-pmd.gradle"
 
 def lib = rootProject.ext.lib
 
@@ -45,11 +45,11 @@ dependencies {
     }
     implementation "com.jakewharton.timber:timber:$lib.timber"
     implementation("com.google.code.findbugs:annotations:$lib.findbugs") {
-        // Need to exclude these, or loadBitmap is broken by:
-        //   com.android.dex.DexException: Multiple dex files define Ljavax/annotation/CheckForNull
         exclude module: 'jsr305'
         exclude module: 'jcip-annotations'
     }
     implementation "com.android.support:design:${rootProject.ext.supportLibraryVersion}"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    implementation "com.android.support:support-dynamic-animation:${rootProject.ext.supportLibraryVersion}"
 }

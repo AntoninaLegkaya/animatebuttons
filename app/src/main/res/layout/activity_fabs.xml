@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/bg"
         android:layout_width="match_parent"
@@ -15,26 +14,67 @@
         android:visibility="invisible"
         tools:context="FabActivity">
 
-        <FrameLayout
-            android:id="@+id/layout_fabs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_edit"
-                app:fabSize="normal" />
+        <ImageView
+            android:id="@+id/fab_compass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/vd_compass"
+            android:visibility="invisible" />
 
-            <include layout="@layout/center_fabs" />
+        <ImageView
+            android:id="@+id/fab_myplaces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/vd_my_location"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/fab_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/vd_share"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/vd_add"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/fab_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/fab_bg"
+            android:src="@drawable/vd_view"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/fab_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/vd_camera"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/fab_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/fab_bg"
+            android:src="@drawable/vd_call"
+            android:visibility="invisible" />
 
 
-        </FrameLayout>
-
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/fab_close"
@@ -42,9 +82,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/animator_selector"
-        android:transitionName="bg"
         android:background="@drawable/fab_bg_revers"
-        />
-   
+        android:src="@drawable/asl_trimclip_editclose"
+        android:tint="#ffffff"
+        android:transitionName="bg" />
+
 </android.support.design.widget.CoordinatorLayout>

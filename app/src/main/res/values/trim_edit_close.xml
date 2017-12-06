@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="image_width">48dp</dimen>
+    <dimen name="image_height">48dp</dimen>
+    <integer name="viewport_width">48</integer>
+    <integer name="viewport_height">48</integer>
+    <integer name="str_width">4</integer>
+    <integer name="str_pen_width">1</integer>
+    <color name="stroke_color">#ffffff</color>
+
+    <string name="path_body_pen">
+        M 15,33  L 28,15
+        </string>
+
+    <item name="pen_pen_trim_end" format="float" type="fraction">1</item>
+    <item name="pen_cross_trim_end" format="float" type="fraction">0</item>
+
+    <!--Stem.-->
+    <string name="path_stem"> M 32,15
+        L 26,10
+          C23,7 20,4 12,12
+        L 30,32
+        </string>
+    <item name="stem_pen_trim_start" format="float" type="fraction">0</item>
+    <item name="stem_pen_trim_end" format="float" type="fraction">1.09</item>
+    <item name="stem_cross_trim_start" format="float" type="fraction">0.57</item>
+    <item name="stem_cross_trim_end" format="float" type="fraction">1</item>
+    <integer name="stem_trim_longer_duration">500</integer>
+    <integer name="stem_trim_shorter_duration">50</integer>
+    <integer name="stem_trim_revers_duration">300</integer>
+
+
+    <integer name="show_hide_cross_duration">250</integer>
+
+    <!--Pen Fab-->
+    <string name="path_pen_fab">M15 29 V32h2.75 L29.5 17 l-2.4 -1.75 L26.4 15</string>
+
+</resources>
