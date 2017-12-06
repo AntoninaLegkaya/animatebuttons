@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -16,24 +15,26 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
+@SuppressWarnings({"PMD.GodClass", "PMD.AccessorMethodGeneration"})
 public class FabActivity extends AppCompatActivity {
 
-    int height;
-    int width;
-    ConstraintLayout constraintLayout;
-    int duration = 200;
-    Transition sharedElementEnterTransition;
-    Transition.TransitionListener transitionListener;
+    private static final int DURATION = 200;
+    private Transition sharedElementEnterTransition;
+    private  Transition.TransitionListener transitionListener;
     private ImageView closeButton;
-    private ImageView callButton;
-    private Animation show_edit;
-    private Animation show_compass;
-    private Animation show_myplaces;
-    private Animation show_share;
-    private Animation show_add;
-    private Animation show_view;
-    private Animation show_camera;
-    private FrameLayout layoutFabs;
+    private  FrameLayout bgLayout;
+    private  ImageView callButton;
+    private Animation showEdit;
+    private  Animation showCompass;
+    private Animation showShare;
+    private  Animation showAdd;
+    private  Animation showView;
+    private  Animation showCamera;
+    private int height;
+    private int width;
     private boolean isShowingMarker;
 
 
@@ -41,7 +42,7 @@ public class FabActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         sharedElementEnterTransition.removeListener(transitionListener);
-        setAnim(constraintLayout, false);
+        setAnim(bgLayout, false);
         setFab(closeButton, true);
 
     }
@@ -58,12 +59,11 @@ public class FabActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fabs);
-        layoutFabs = findViewById(R.id.layout_fabs);
 
-        constraintLayout = findViewById(R.id.bg);
+        bgLayout = findViewById(R.id.bg);
         closeButton = findViewById(R.id.fab_close);
         final ImageView compassButton = findViewById(R.id.fab_compass);
-        final ImageView myplacesButton = findViewById(R.id.fab_myplaces);
+        final ImageView myPlacesButton = findViewById(R.id.fab_myplaces);
         final ImageView shareButton = findViewById(R.id.fab_share);
         final ImageView addButton = findViewById(R.id.fab_add);
         final ImageView viewButton = findViewById(R.id.fab_view);
@@ -71,38 +71,33 @@ public class FabActivity extends AppCompatActivity {
 
         callButton = findViewById(R.id.fab_call);
 
-        show_edit = AnimationUtils.loadAnimation(getApplication(), R.anim.edit_show);
-        final Animation hide_edit = AnimationUtils.loadAnimation(getApplication(), R.anim.edit_hide);
-//
+        showEdit = AnimationUtils.loadAnimation(getApplication(), R.anim.edit_show);
+        final Animation hideEdit = AnimationUtils.loadAnimation(getApplication(), R.anim.edit_hide);
 
-//
-        show_compass = AnimationUtils.loadAnimation(getApplication(), R.anim.compass_show);
-        final Animation hide_compass = AnimationUtils.loadAnimation(getApplication(), R.anim.compass_hide);
-//
-//
-        show_myplaces = AnimationUtils.loadAnimation(getApplication(), R.anim.myplaces_show);
-        final Animation hide_myplaces = AnimationUtils.loadAnimation(getApplication(), R.anim.myplaces_hide);
-//
-        show_share = AnimationUtils.loadAnimation(getApplication(), R.anim.share_show);
-        final Animation hide_share = AnimationUtils.loadAnimation(getApplication(), R.anim.share_hide);
-//
-        show_add = AnimationUtils.loadAnimation(getApplication(), R.anim.add_show);
-        final Animation hide_add = AnimationUtils.loadAnimation(getApplication(), R.anim.add_hide);
+        showCompass = AnimationUtils.loadAnimation(getApplication(), R.anim.compass_show);
+        final Animation hideCompass = AnimationUtils.loadAnimation(getApplication(),
+                R.anim.compass_hide);
+     Animation showMyPlaces = AnimationUtils.loadAnimation(getApplication(), R.anim.myplaces_show);
+        final Animation hideMyPlaces = AnimationUtils.loadAnimation(getApplication(),
+                R.anim.myplaces_hide);
+        showShare = AnimationUtils.loadAnimation(getApplication(), R.anim.share_show);
+        final Animation hideShare = AnimationUtils.loadAnimation(getApplication(),
+                R.anim.share_hide);
+        showAdd = AnimationUtils.loadAnimation(getApplication(), R.anim.add_show);
+        final Animation hideAdd = AnimationUtils.loadAnimation(getApplication(), R.anim.add_hide);
 
-        show_view = AnimationUtils.loadAnimation(getApplication(), R.anim.view_show);
-        final Animation hide_view = AnimationUtils.loadAnimation(getApplication(), R.anim.view_hide);
+        showView = AnimationUtils.loadAnimation(getApplication(), R.anim.view_show);
+        final Animation hideView = AnimationUtils.loadAnimation(getApplication(), R.anim.view_hide);
 
-        show_camera = AnimationUtils.loadAnimation(getApplication(), R.anim.camera_show);
-        final Animation hide_camera = AnimationUtils.loadAnimation(getApplication(), R.anim.camera_hide);
-
-
-
+        showCamera = AnimationUtils.loadAnimation(getApplication(), R.anim.camera_show);
+        final Animation hideCamera = AnimationUtils.loadAnimation(getApplication(),
+                R.anim.camera_hide);
 
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myplacesButton.startAnimation(hide_myplaces);
-                myplacesButton.setClickable(false);
+                myPlacesButton.startAnimation(hideMyPlaces);
+                myPlacesButton.setClickable(false);
                 sharedElementEnterTransition.removeListener(transitionListener);
                 morph();
             }
@@ -115,9 +110,7 @@ public class FabActivity extends AppCompatActivity {
         height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
 
-
         sharedElementEnterTransition = getWindow().getSharedElementEnterTransition();
-
 
         transitionListener = new Transition.TransitionListener() {
             @Override
@@ -127,23 +120,23 @@ public class FabActivity extends AppCompatActivity {
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                setAnim(constraintLayout, true);
+                setAnim(bgLayout, true);
                 setFab(closeButton, false);
             }
 
             @Override
             public void onTransitionCancel(Transition transition) {
-
+                // Nothing here
             }
 
             @Override
             public void onTransitionPause(Transition transition) {
-
+                // Nothing here
             }
 
             @Override
             public void onTransitionResume(Transition transition) {
-
+                // Nothing here
             }
         };
 
@@ -151,219 +144,232 @@ public class FabActivity extends AppCompatActivity {
 
         callButton.setVisibility(View.VISIBLE);
 
-        FrameLayout.LayoutParams myplacesParams = (FrameLayout.LayoutParams) myplacesButton.getLayoutParams();
-        myplacesParams.rightMargin += 0;
-        myplacesParams.bottomMargin += (int) (myplacesButton.getHeight() * 2.5);
-        myplacesButton.setLayoutParams(myplacesParams);
-        myplacesButton.startAnimation(show_myplaces);
-        myplacesButton.setClickable(true);
+        FrameLayout.LayoutParams myPlacesParams = (FrameLayout.LayoutParams)
+                myPlacesButton.getLayoutParams();
+        myPlacesParams.rightMargin += 0;
+        myPlacesParams.bottomMargin += (int) (myPlacesButton.getHeight() * 2.5);
+        myPlacesButton.setLayoutParams(myPlacesParams);
+        myPlacesButton.startAnimation(showMyPlaces);
+        myPlacesButton.setClickable(true);
 
-        show_myplaces.setAnimationListener(new Animation.AnimationListener() {
+        showMyPlaces.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                cameraButton.startAnimation(show_camera);
+                cameraButton.startAnimation(showCamera);
                 cameraButton.setClickable(true);
             }
 
         });
 
-        hide_myplaces.setAnimationListener(new Animation.AnimationListener() {
+        hideMyPlaces.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                cameraButton.startAnimation(hide_camera);
+                cameraButton.startAnimation(hideCamera);
                 cameraButton.setClickable(false);
             }
 
         });
 
-        show_camera.setAnimationListener(new Animation.AnimationListener() {
+        showCamera.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                shareButton.startAnimation(show_share);
+                shareButton.startAnimation(showShare);
                 shareButton.setClickable(true);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                // Nothing here
             }
         });
 
-        hide_camera.setAnimationListener(new Animation.AnimationListener() {
+        hideCamera.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                shareButton.startAnimation(hide_share);
+                shareButton.startAnimation(hideShare);
                 shareButton.setClickable(false);
             }
 
         });
 
-        show_share.setAnimationListener(new Animation.AnimationListener() {
+        showShare.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                addButton.startAnimation(show_add);
+                addButton.startAnimation(showAdd);
                 addButton.setClickable(true);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                // Nothing here
             }
         });
 
-        hide_share.setAnimationListener(new Animation.AnimationListener() {
+        hideShare.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                addButton.startAnimation(hide_add);
+                addButton.startAnimation(hideAdd);
                 addButton.setClickable(false);
             }
 
         });
 
-        show_add.setAnimationListener(new Animation.AnimationListener() {
+        showAdd.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                viewButton.startAnimation(show_view);
+                viewButton.startAnimation(showView);
                 viewButton.setClickable(true);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                // Nothing here
             }
         });
-        hide_add.setAnimationListener(new Animation.AnimationListener() {
+        hideAdd.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                viewButton.startAnimation(hide_view);
+                viewButton.startAnimation(hideView);
                 viewButton.setClickable(false);
             }
 
         });
 
 
-        show_view.setAnimationListener(new Animation.AnimationListener() {
+        showView.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                compassButton.startAnimation(show_compass);
+                compassButton.startAnimation(showCompass);
                 compassButton.setClickable(true);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                // Nothing here
             }
         });
 
-        hide_view.setAnimationListener(new Animation.AnimationListener() {
+        hideView.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                compassButton.startAnimation(hide_compass);
+                compassButton.startAnimation(hideCompass);
                 compassButton.setClickable(true);
             }
 
         });
-        hide_compass.setAnimationListener(new Animation.AnimationListener() {
+        hideCompass.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                callButton.startAnimation(hide_edit);
+                callButton.startAnimation(hideEdit);
                 callButton.setClickable(true);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                // Nothing here
             }
         });
-        hide_edit.setAnimationListener(new Animation.AnimationListener() {
+        hideEdit.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                // Nothing here
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                setAnim(constraintLayout, false);
+                setAnim(bgLayout, false);
                 setFab(closeButton, true);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
+                // Nothing here
             }
         });
     }
@@ -371,30 +377,28 @@ public class FabActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setAnim(final View myView, boolean isShow) {
 
-// get the center for the clipping circle
         int cx = closeButton.getWidth() / 2;
         int cy = closeButton.getHeight() / 2;
 
-// get the final radius for the clipping circle
         float finalRadius = (float) Math.hypot(width, height);
 
         int[] startingLocation = new int[2];
         closeButton.getLocationInWindow(startingLocation);
 
-// create the animator for this view (the start radius is zero)
         Animator anim;
         if (isShow) {
             anim =
-                    ViewAnimationUtils.createCircularReveal(myView, (int) (closeButton.getX() + cx), (int) (closeButton.getY() + cy), 0, finalRadius);
-            // make the view visible and start the animation
+                    ViewAnimationUtils.createCircularReveal(myView, (int) (closeButton.getX() + cx),
+                            (int) (closeButton.getY() + cy), 0, finalRadius);
             myView.setVisibility(View.VISIBLE);
         } else {
             anim =
-                    ViewAnimationUtils.createCircularReveal(myView, (int) (closeButton.getX() + cx), (int) (closeButton.getY() + cy), finalRadius, 0);
+                    ViewAnimationUtils.createCircularReveal(myView, (int) (closeButton.getX() + cx),
+                            (int) (closeButton.getY() + cy), finalRadius, 0);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-
+                    // Nothing here
                 }
 
                 @Override
@@ -406,69 +410,55 @@ public class FabActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationCancel(Animator animator) {
-
+                    // Nothing here
                 }
 
                 @Override
                 public void onAnimationRepeat(Animator animator) {
-
+                    // Nothing here
                 }
             });
         }
 
-        anim.setDuration(duration);
+        anim.setDuration(DURATION);
         anim.start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     void setFab(final View myView, boolean isShow) {
 
-// get the center for the clipping circle
         int cx = myView.getWidth() / 2;
         int cy = myView.getHeight() / 2;
 
-// get the initial radius for the clipping circle
         float initialRadius = (float) Math.hypot(cx, cy);
         Animator anim;
         if (isShow) {
-// create the animation (the final radius is zero)
-            anim =
-                    ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, initialRadius);
-// make the view invisible when the animation is done
+            anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, initialRadius);
             anim.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     myView.setVisibility(View.VISIBLE);
-
                     finishAfterTransition();
-
                 }
             });
-            anim.setDuration(duration);
+            anim.setDuration(DURATION);
         } else {
 
-            anim =
-                    ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
-// make the view invisible when the animation is done
+            anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
             anim.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-//                    myView.setVisibility(View.INVISIBLE);
-                    layoutFabs.setVisibility(View.VISIBLE);
                     if (callButton != null) {
-
-                        callButton.startAnimation(show_edit);
+                        callButton.startAnimation(showEdit);
                     }
 
                 }
             });
         }
-// start the animation
         anim.start();
 
     }
-
 
 }

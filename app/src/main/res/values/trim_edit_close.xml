@@ -9,39 +9,12 @@
     <integer name="str_pen_width">1</integer>
     <color name="stroke_color">#ffffff</color>
 
-    <!--<string name="editclose_path_head_pen">-->
-    <!--M 28,12 L 29,13-->
-    <!--L 29,13 L 30,14-->
-    <!--L 30,14 L 31,15-->
-    <!--L 31,15 L 34,18-->
-    <!--</string>-->
-
-    <!--<string name="editclose_path_body_pen">-->
-    <!--M 14,28 L 18,24-->
-    <!--L 18,24 L 22,20-->
-    <!--L 22,20 L 26,16-->
-    <!--L 30,20 L 26,24-->
-    <!--L 26,24 L 22,28-->
-    <!--L 22,28 L 18,32 Z</string>-->
-
-    <!--<item name="editclose_pen_pen_trim_end" format="float" type="fraction">1</item>-->
-    <!--<item name="editclose_pen_cross_trim_end" format="float" type="fraction">0</item>-->
-    <!--<integer name="editclose_show_hide_pen_duration">350</integer>-->
-    <!--<integer name="editclose_show_pen_delay">250</integer>-->
-
-
     <string name="path_body_pen">
         M 15,33  L 28,15
         </string>
-    <!--<string name="path_heard_pen">-->
-      <!--M 32,15 L 28,12-->
-        <!--</string>-->
 
     <item name="pen_pen_trim_end" format="float" type="fraction">1</item>
     <item name="pen_cross_trim_end" format="float" type="fraction">0</item>
-    <integer name="show_hide_pen_duration">100</integer>
-    <integer name="show_pen_delay">250</integer>
-
 
     <!--Stem.-->
     <string name="path_stem"> M 32,15
@@ -53,34 +26,14 @@
     <item name="stem_pen_trim_end" format="float" type="fraction">1.09</item>
     <item name="stem_cross_trim_start" format="float" type="fraction">0.57</item>
     <item name="stem_cross_trim_end" format="float" type="fraction">1</item>
-
-    <item name="stem_cross_trim_revers_1_start" format="float" type="fraction">0.65</item>
-    <item name="stem_cross_trim_revers_1_end" format="float" type="fraction">0.8</item>
-
-    <item name="stem_cross_trim_revers_2_start" format="float" type="fraction">1.2</item>
-    <item name="stem_cross_trim_revers_2_end" format="float" type="fraction">1.1</item>
-
     <integer name="stem_trim_longer_duration">500</integer>
     <integer name="stem_trim_shorter_duration">50</integer>
     <integer name="stem_trim_revers_duration">300</integer>
 
 
-    <!--close. -->
-    <string name="cross">
-        M 14,28 L 18,24
-        L 14,20 L 18,16
-        L 22,20 L 26,16
-        L 30,20 L 26,24
-        L30,28 L 26,32
-        L 22,28 L 18,32 Z</string>
-    <item name="cross_pen_trim_end" format="float" type="fraction">0</item>
-    <item name="cross_close_trim_end" format="float" type="fraction">1</item>
-    <integer name="show_cross_delay">350</integer>
     <integer name="show_hide_cross_duration">250</integer>
 
-
     <!--Pen Fab-->
-<string name="path_pen_fab">M15 29 V32h2.75 L29.5 17 l-2.4 -1.75 L26.4 15</string>
-
+    <string name="path_pen_fab">M15 29 V32h2.75 L29.5 17 l-2.4 -1.75 L26.4 15</string>
 
 </resources>
